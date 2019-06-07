@@ -1,8 +1,39 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "St Louis Sites";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>St. Louis Sites</title>
+
+
+</head>
+<body>
+
+    <div class="navbar-header">
+
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+
+
+    </div>
+
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>@Html.ActionLink("About", "About", "Home")</li>
+        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+    </ul>
+
+    <div class="jumbotron">
+        <h1>St Louis Sites</h1>
+        <p class="lead">
+            St Louis Sites is a web application that lets you add various sights in and around the city of interest to a list you can access as a reference for traveling.
+            Happy Exploring!
+    </div>
+
+</body>
+</html>
