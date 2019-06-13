@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using StLouisSites2.Data;
 using StLouisSites2.Models;
+using StLouisSites2.ViewModels.Location;
 
 namespace StLouisSites2.Controllers
 {
@@ -19,8 +20,8 @@ namespace StLouisSites2.Controllers
 
         public IActionResult Index()
         {
-            List<Location> locations = context.Locations.ToList();
-            return View();
+            var viewModelLocations = LocationListViewModel.GetLocationListViewModel(context);
+            return View(viewModelLocations);
         }
 
         [HttpGet]
@@ -29,10 +30,10 @@ namespace StLouisSites2.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Location location)
+        public IActionResult Create(LocationCreateViewModel locationViewModel)
         {
-            context.Add(location);
-            context.SaveChanges();
+            int ID = LocationCreateViewModel.CreateLocation(context,locationViewModel);
+            
             return RedirectToAction(nameof(Index));
         }
     }
