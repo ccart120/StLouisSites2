@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace StLouisSites2.Models
 {
-    public class Location
+    public class LocationRating
     {
         public int ID { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int RatingID { get; set; }
+        public int Rating { get; set; }
+        public string Review { get; set; }
     }
 }
