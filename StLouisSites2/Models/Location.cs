@@ -10,6 +10,9 @@ namespace StLouisSites2.Models
         public int ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public int RatingID { get; set; }
+
+        //public int LocationRatingID { get; set; }
+        //public LocationRating Rating { get; set; }
+
     }
 }
