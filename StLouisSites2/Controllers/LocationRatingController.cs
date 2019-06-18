@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using StLouisSites2.Data;
+using StLouisSites2.Models;
 using StLouisSites2.ViewModels.LocationRating;
 
 namespace StLouisSites2.Controllers
@@ -22,16 +23,17 @@ namespace StLouisSites2.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(int locationID)
         {
             return View();
         }
         [HttpPost]
         public IActionResult Create(LocationRatingCreateViewModel locationRatingCreateViewModel)
         {
-            int ID = LocationRatingCreateViewModel.CreateLocationRating(context, locationRatingCreateViewModel);
+            locationRatingCreateViewModel.Persist(context);
+            //int ID = LocationRatingCreateViewModel.CreateLocationRating(context, locationRatingCreateViewModel);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(controllerName: nameof(Location), actionName: nameof(Index));
         }
     }
 }

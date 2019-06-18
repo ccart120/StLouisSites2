@@ -6,16 +6,21 @@
 
 <h1>Create</h1>
 
-<h4>LocationRatingCreateViewModel</h4>
+<h4>Add a rating and/or a review for a location</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                @*<label asp-for="ID" class="control-label"></label>*@
-                <input hidden asp-for="ID" class="form-control" />
-                <span asp-validation-for="ID" class="text-danger"></span>
+                @*<label asp-for="LocationID" class="control-label"></label>*@
+                <input hidden asp-for="LocationID" class="form-control" />
+                <span asp-validation-for="LocationID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LocationName" class="control-label">Location Name</label>
+                <input readonly asp-for="LocationName" class="form-control" />
+                <span asp-validation-for="LocationName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Rating" class="control-label"></label>

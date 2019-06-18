@@ -9,21 +9,53 @@ namespace StLouisSites2.ViewModels.LocationRating
 {
     public class LocationRatingCreateViewModel
     {
-        public int ID { get; set; }
+        private ApplicationDbContext context;
+
+        public int LocationID { get; set; }
+        public string LocationName { get; set; }
         public int Rating { get; set; }
         public string Review { get; set; }
 
-        public static int CreateLocationRating(ApplicationDbContext context, LocationRatingCreateViewModel viewModelRating)
+        public static LocationRatingCreateViewModel GetLocationRatingViewModel(ApplicationDbContext context, int locationID)
+        {
+            LocationRatingCreateViewModel locationRatingCreateViewModel = new LocationRatingCreateViewModel();
+            Models.LocationRating locationRating = new Models.LocationRating();
+            var viewModelLocation = context.Locations.Find(locationID);
+            locationRatingCreateViewModel.LocationName = viewModelLocation.Name;
+            locationRatingCreateViewModel.LocationID = locationID;
+            return locationRatingCreateViewModel;
+        }
+
+        public void Persist(ApplicationDbContext context)
         {
             Models.LocationRating locationRating = new Models.LocationRating();
-
-            locationRating.Rating = viewModelRating.Rating;
-            locationRating.Review = viewModelRating.Review;
-
+            {
+                locationRating.Rating = this.Rating;
+                locationRating.Review = this.Review;
+                locationRating.ID = this.LocationID;
+            }
             context.Add(locationRating);
             context.SaveChanges();
-            return locationRating.ID;
+            //return locationRating.ID;
         }
+        
+
+        //public static int CreateLocationRating(ApplicationDbContext context, LocationRatingCreateViewModel locationRatingCreateViewModel)
+        //    {
+        //        Models.LocationRating locationRating = new Models.LocationRating();
+        //        Models.Location location = new Models.Location();
+        //        get location name from dbcontext location
+        //            first get locationID(locationrating)
+        //            viewModelRating.LocationName = Models.Location.Name;
+
+        //        viewModelRating.LocationID = Models.Location.ID;
+        //        locationRating.LocationID = viewModelRating.LocationID;
+
+        //    context.Add(locationRating);
+        //        context.SaveChanges();
+        //        return locationRating.ID;
+        //    }
+        
     }
 
     
