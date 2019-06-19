@@ -11,7 +11,7 @@ namespace StLouisSites2.Models
         public string Name { get; set; }
         public string Description { get; set; }
 
-        //public List<LocationRating> LocationRatings { get; set; }
+        public List<LocationRating> LocationRatings { get; set; }
 
     }
 }

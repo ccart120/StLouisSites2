@@ -13,7 +13,7 @@ namespace StLouisSites2.Models
         public string Review { get; set; }
         
 
-        //public int LocationID { get; set; }
-        //public Location Location { get; set; }
+        public int LocationID { get; set; }
+        public Location Location { get; set; }
     }
 }

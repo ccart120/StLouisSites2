@@ -13,26 +13,52 @@ namespace StLouisSites2.ViewModels.Location
         public int ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public List<Models.LocationRating> LocationRatings { get; set; }
+        public double AverageRating { get; set; }
 
-        
+
         public static List<LocationListViewModel>GetLocationListViewModel(ApplicationDbContext context)
         {
             List<Models.Location> locations = context.Locations.ToList();
+            
 
             List<LocationListViewModel> viewModelLocations = new List<LocationListViewModel>();
             foreach (Models.Location location in locations)
             {
-               LocationListViewModel viewModel = new LocationListViewModel();
+                LocationListViewModel viewModel = new LocationListViewModel();
+                viewModel.ID = location.ID;
                 viewModel.Name = location.Name;
                 viewModel.Description = location.Description;
-
+                //I don't think we've set this up yet, or/amd we need to get it from DbContext(database)
+                //probably why it is null
+                //let's start here
+                //this gets the LocatingRatings list from context
+                List<Models.LocationRating> tempLocationRatings = context.LocationRatings.ToList();
+                //this creates a new instance of a list
+                List<LocationListViewModel> viewModelLocationRatings = new List<LocationListViewModel>();
+                //then,for each tempLocationRating (where I stored list from context)
+                //I need to assign its value to my new list (viewModelLocation Ratings of type
+                //LocationListViewModel so I can refer to it/use it in the view
+                
+                viewModel.LocationRatings = tempLocationRatings;
+                
+                if (location.LocationRatings.Count > 0)
+                {
+                    viewModel.AverageRating = Math.Round(location.LocationRatings.Average(x => x.Rating), 2);
+                }
+                else
+                {
+                    string noRating = "none";
+                    double noRatingMessage;
+                    noRatingMessage = Convert.ToDouble(noRating);
+                    viewModel.AverageRating = noRatingMessage;
+                }
+                
                 viewModelLocations.Add(viewModel);
               
             }
             return viewModelLocations;
-            //return locations.Cast<LocationListViewModel>()
-                //.Select(location => GetLocationListItemFromLocation(location))
-                //.ToList();
+           
             
         }
 

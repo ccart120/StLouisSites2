@@ -19,9 +19,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            @*<th>
+            <th>
                 Average Rating
-            </th>*@
+            </th>
             
         </tr>
     </thead>
@@ -34,9 +34,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-            @*<td>
+            <td>
                 @Html.DisplayFor(modelItem => item.AverageRating)
-            </td>*@
+            </td>
             <td>
             <td><a asp-controller="LocationRating" asp-action="Create" asp-route-locationID="@item.ID">Rate/Review</a></td>
             <td>
