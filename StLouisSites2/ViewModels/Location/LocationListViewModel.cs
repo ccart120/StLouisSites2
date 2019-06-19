@@ -29,17 +29,15 @@ namespace StLouisSites2.ViewModels.Location
                 viewModel.ID = location.ID;
                 viewModel.Name = location.Name;
                 viewModel.Description = location.Description;
-                //I don't think we've set this up yet, or/amd we need to get it from DbContext(database)
-                //probably why it is null
-                //let's start here
+                
                 //this gets the LocatingRatings list from context
                 List<Models.LocationRating> tempLocationRatings = context.LocationRatings.ToList();
                 //this creates a new instance of a list
                 List<LocationListViewModel> viewModelLocationRatings = new List<LocationListViewModel>();
-                //then,for each tempLocationRating (where I stored list from context)
-                //I need to assign its value to my new list (viewModelLocation Ratings of type
-                //LocationListViewModel so I can refer to it/use it in the view
-                
+                //then, 
+                //I need to assign the value of tempLocationRating (where I stored list from context)value to my new list (viewModelLocation Ratings of type
+                //LocationListViewModel LocationRatings so I can refer to it/use it in the view
+
                 viewModel.LocationRatings = tempLocationRatings;
                 
                 if (location.LocationRatings.Count > 0)
