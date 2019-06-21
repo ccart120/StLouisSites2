@@ -30,9 +30,8 @@ namespace StLouisSites2.Controllers
         [HttpPost]
         public IActionResult Create(LocationRatingCreateViewModel locationRatingCreateViewModel)
         {
-            locationRatingCreateViewModel.Persist(context);
-            //int ID = LocationRatingCreateViewModel.CreateLocationRating(context, locationRatingCreateViewModel);
-
+            int ID = LocationRatingCreateViewModel.GetLocationRatingViewModel(context, locationRatingCreateViewModel);
+           
             return RedirectToAction(controllerName: nameof(Location), actionName: nameof(Index));
         }
     }

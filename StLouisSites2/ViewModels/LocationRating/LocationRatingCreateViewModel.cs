@@ -9,6 +9,7 @@ namespace StLouisSites2.ViewModels.LocationRating
 {
     public class LocationRatingCreateViewModel
     {
+        
         private ApplicationDbContext context;
 
         public int LocationID { get; set; }
@@ -16,28 +17,30 @@ namespace StLouisSites2.ViewModels.LocationRating
         public int Rating { get; set; }
         public string Review { get; set; }
 
-        public static LocationRatingCreateViewModel GetLocationRatingViewModel(ApplicationDbContext context, int locationID)
+        public static int GetLocationRatingViewModel(ApplicationDbContext context, LocationRatingCreateViewModel locationRatingCreateViewModel)
         {
-            LocationRatingCreateViewModel locationRatingCreateViewModel = new LocationRatingCreateViewModel();
+            //LocationRatingCreateViewModel locationRatingCreateViewModel = new LocationRatingCreateViewModel();
             Models.LocationRating locationRating = new Models.LocationRating();
-            var viewModelLocation = context.Locations.Find(locationID);
-            locationRatingCreateViewModel.LocationName = viewModelLocation.Name;
-            locationRatingCreateViewModel.LocationID = locationID;
-            return locationRatingCreateViewModel;
-        }
-
-        public void Persist(ApplicationDbContext context)
-        {
-            Models.LocationRating locationRating = new Models.LocationRating();
-            {
-                locationRating.Rating = this.Rating;
-                locationRating.Review = this.Review;
-                locationRating.ID = this.LocationID;
-            }
+            //var viewModelLocation = context.Locations.Where(Models.Location location.ID == LocationID);
+            //locationRatingCreateViewModel.LocationName = viewModelLocation.Name;
+            locationRating.LocationID = locationRatingCreateViewModel.LocationID;
+            locationRating.Rating = locationRatingCreateViewModel.Rating;
+            locationRating.Review = locationRatingCreateViewModel.Review;
+            //locationRating.ID = locationRatingCreateViewModel.LocationID;
             context.Add(locationRating);
             context.SaveChanges();
-            //return locationRating.ID;
+            return locationRating.ID;
         }
+
+        //public void Persist(ApplicationDbContext context)
+        //{
+        //    Models.LocationRating locationRating = new Models.LocationRating();
+        //    {
+                
+        //    }
+            
+        //    //return locationRating.ID;
+        //}
         
 
         //public static int CreateLocationRating(ApplicationDbContext context, LocationRatingCreateViewModel locationRatingCreateViewModel)
