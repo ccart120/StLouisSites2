@@ -20,7 +20,7 @@ namespace StLouisSites2.Controllers
 
         public IActionResult Index()
         {
-            var viewModelLocations = LocationListViewModel.GetLocationListViewModel(context);
+            List<LocationListViewModel> viewModelLocations = LocationListViewModel.GetLocationListViewModel(context);
             return View(viewModelLocations);
         }
 
@@ -35,6 +35,13 @@ namespace StLouisSites2.Controllers
             int ID = LocationCreateViewModel.CreateLocation(context,locationViewModel);
             
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Details(int ID)
+        {
+
+            
+            return View(ID);
         }
     }
 }
