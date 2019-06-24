@@ -1,8 +1,40 @@
-﻿@model IEnumerable<StLouisSites2.ViewModels.Location.LocationDetailsViewModel>
+﻿@model StLouisSites2.ViewModels.Location.LocationDetailsViewModel
 @{
     ViewData["Title"] = "Details";
 }
 
 <h1>Details</h1>
+<p>
+    @*<a asp-controller="LocationRating" asp-action="Create" asp-route-locationID="@Model.ID">Rate/Review</a>*@
+</p>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Details">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input readonly asp-for="Name" value="@Model.Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" value="@Model.Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LocationRatings" class="control-label"></label>
+                <input asp-for="LocationRatings" value="@Model.LocationRatings" class="form-control" />
+                <span asp-validation-for="LocationRatings" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 
 

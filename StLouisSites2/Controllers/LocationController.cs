@@ -37,11 +37,9 @@ namespace StLouisSites2.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Details(int ID)
+        public IActionResult Details(LocationDetailsViewModel locationDetailsViewModel)
         {
-
-            
-            return View(ID);
+            return View();
         }
     }
 }
