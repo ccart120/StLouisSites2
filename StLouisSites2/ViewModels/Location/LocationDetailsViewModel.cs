@@ -33,9 +33,11 @@ namespace StLouisSites2.ViewModels.Location
 
 
             //then, assign allofthe properties of the viewmodel to the location object??
-            locationDetailsViewModel.Name = location.Name;
-            locationDetailsViewModel.Description = location.Description;
-            locationDetailsViewModel.ID = location.ID;
+
+            //COMMENTTED OUT!!!! - put in constructor in the bottom
+            //locationDetailsViewModel.Name = location.Name;
+            //locationDetailsViewModel.Description = location.Description;
+            //locationDetailsViewModel.ID = location.ID;
 
             //then, to get the list of ratings and reviews that I need to display on the Details view
             //I have to create an instance of a LocationRating object
@@ -48,7 +50,7 @@ namespace StLouisSites2.ViewModels.Location
 
             //so I have made an instance of this, and because this is a foreign id, I can get all of the
             //properties associated with this specific Location Rating object
-            
+
             List<Models.LocationRating> locationRatings = context.LocationRatings
                 .Where(r => r.LocationID == id)
                 .ToList();
@@ -61,12 +63,21 @@ namespace StLouisSites2.ViewModels.Location
                 locationRatingDetailsViewModels.Add(locationRatingDetailsViewModel);
 
             }
-            
-            
 
-            locationDetailsViewModel.LocationRatingDetailsViewModels = locationRatingDetailsViewModels;
 
-            return locationDetailsViewModel;
+            //COMMENTED OUT - put in constructor at the bottom
+            //locationDetailsViewModel.LocationRatingDetailsViewModels = locationRatingDetailsViewModels;
+
+            return new LocationDetailsViewModel()
+            {
+                Name = location.Name,
+                Description = location.Description,
+                ID = location.ID,
+                LocationRatingDetailsViewModels = locationRatingDetailsViewModels
+
+
+            };
+
             //List<Models.LocationRating> locationRatings = new List<Models.LocationRating>();
 
 
