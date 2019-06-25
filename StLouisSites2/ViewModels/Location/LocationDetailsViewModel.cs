@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StLouisSites2.Data;
+using StLouisSites2.ViewModels.LocationRating;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,22 +14,24 @@ namespace StLouisSites2.ViewModels.Location
         public int ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<Models.LocationRating> LocationRatings { get; set; }
-        public List<Models.LocationRating> Reviews { get; set; }
+        public List<LocationRatingDetailsViewModel> LocationRatingDetailsViewModels { get; set; }
+        //public List<Models.LocationRating> Reviews { get; set; }
 
 
-        public LocationDetailsViewModel GetLocationDetailsViewModel(ApplicationDbContext context, LocationDetailsViewModel locationDetailsViewModel)
+        public static LocationDetailsViewModel GetLocationDetailsViewModel(ApplicationDbContext context, int id)
         {
             //make an instance of a view model //we are not assigning the id, we are finding the LocationRating that has the same LocationId
             //as the ID of the Location object that we (passed in) and then assign it properties
             //we are not assigning the id, we are finding the LocationRating that has the same LocationId
             //as the ID of the Location object that we passed in
-            locationDetailsViewModel = new LocationDetailsViewModel();
-            Models.Location location = context.Locations.Include(l => l.Name)
-                .Include(l => l.Description)
-                .Single(l => l.ID == locationDetailsViewModel.ID);
-                
-                
+            LocationDetailsViewModel locationDetailsViewModel = new LocationDetailsViewModel();
+            Models.Location location = context.Locations
+                .Single(l => l.ID == id);
+            //include or 2 selects or 2 wheres do not work
+            //location = context.Locations.Select(l => l.Name);
+            //location = context.Locations.Select(l => l.Description)
+
+
             //then, assign allofthe properties of the viewmodel to the location object??
             locationDetailsViewModel.Name = location.Name;
             locationDetailsViewModel.Description = location.Description;
@@ -45,13 +48,23 @@ namespace StLouisSites2.ViewModels.Location
 
             //so I have made an instance of this, and because this is a foreign id, I can get all of the
             //properties associated with this specific Location Rating object
-
+            
             List<Models.LocationRating> locationRatings = context.LocationRatings
-                .Where(r => r.LocationID == locationDetailsViewModel.ID)
-                .Include(r => r.Rating)
+                .Where(r => r.LocationID == id)
                 .ToList();
+            List<LocationRatingDetailsViewModel> locationRatingDetailsViewModels = new List<LocationRatingDetailsViewModel>();
+            foreach (Models.LocationRating locationRating in locationRatings)
+            {
+                LocationRatingDetailsViewModel locationRatingDetailsViewModel = new LocationRatingDetailsViewModel();
+                locationRatingDetailsViewModel.Rating = locationRating.Rating;
+                locationRatingDetailsViewModel.Review = locationRating.Review;
+                locationRatingDetailsViewModels.Add(locationRatingDetailsViewModel);
 
-            locationDetailsViewModel.LocationRatings = locationRatings;
+            }
+            
+            
+
+            locationDetailsViewModel.LocationRatingDetailsViewModels = locationRatingDetailsViewModels;
 
             return locationDetailsViewModel;
             //List<Models.LocationRating> locationRatings = new List<Models.LocationRating>();

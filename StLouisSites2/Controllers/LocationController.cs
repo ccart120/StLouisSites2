@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using StLouisSites2.Data;
 using StLouisSites2.Models;
 using StLouisSites2.ViewModels.Location;
+using StLouisSites2.ViewModels.LocationRating;
 
 namespace StLouisSites2.Controllers
 {
@@ -31,15 +32,22 @@ namespace StLouisSites2.Controllers
         }
         [HttpPost]
         public IActionResult Create(LocationCreateViewModel locationViewModel)
-        {
-            int ID = LocationCreateViewModel.CreateLocation(context,locationViewModel);
+        { 
+            if (ModelState.IsValid)
+            {
+                int ID = LocationCreateViewModel.CreateLocation(context, locationViewModel);
+
+                return RedirectToAction(nameof(Index));
+            }
+            return View(locationViewModel);
             
-            return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Details(LocationDetailsViewModel locationDetailsViewModel)
+        public IActionResult Details(int id)
         {
-            return View();
+           
+            LocationDetailsViewModel locationDetailsViewModel = LocationDetailsViewModel.GetLocationDetailsViewModel(context, id);
+            return View(locationDetailsViewModel);
         }
     }
 }
