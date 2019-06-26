@@ -53,8 +53,18 @@ namespace StLouisSites2.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            LocationEditViewModel locationEditViewModel = new LocationEditViewModel();
-            return View(locationEditViewModel);
+            return View(model:new LocationEditViewModel(id, context));
+        }
+
+        [HttpPost]
+        public IActionResult Edit(LocationEditViewModel locationEditViewModel, int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(new LocationEditViewModel());
+            }
+            locationEditViewModel.Persist(id, context);
+            return RedirectToAction(actionName: nameof(Index));
         }
     }
 }

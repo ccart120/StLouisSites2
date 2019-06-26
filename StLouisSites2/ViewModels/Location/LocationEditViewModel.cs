@@ -20,20 +20,21 @@ namespace StLouisSites2.ViewModels.Location
         //[Required]
         public string County { get; set; }
 
-        public LocationEditViewModel locationEditViewModel(int id, ApplicationDbContext context)
+        public LocationEditViewModel() { }
+
+        public LocationEditViewModel (int id, ApplicationDbContext context)
         {
             //gets the location object from context by id
             Models.Location location = context.Locations.
                 Single(l => l.ID == id);
             //returns a populated LocationEditViewModel object
             //still need to create an instance??
-            return new LocationEditViewModel()
-            {
-                Name = location.Name,
-                Description = location.Description,
-                Address = location.Address,
-                County = location.County,
-            };
+
+            Name = location.Name;
+            Description = location.Description;
+            Address = location.Address;
+            County = location.County;
+            
         }
             
         
