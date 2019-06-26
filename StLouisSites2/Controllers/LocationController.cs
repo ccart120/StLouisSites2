@@ -32,14 +32,15 @@ namespace StLouisSites2.Controllers
         }
         [HttpPost]
         public IActionResult Create(LocationCreateViewModel locationViewModel)
-        { 
-            if (ModelState.IsValid)
-            {
-                int ID = LocationCreateViewModel.CreateLocation(context, locationViewModel);
+        {
+            //if (!ModelState.IsValid)
+            //{
+            //return View(locationViewModel);
+            //}
 
-                return RedirectToAction(nameof(Index));
-            }
-            return View(locationViewModel);
+            int ID = LocationCreateViewModel.CreateLocation(context, locationViewModel);
+            
+            return RedirectToAction(nameof(Index));
             
         }
 
@@ -48,6 +49,12 @@ namespace StLouisSites2.Controllers
            
             LocationDetailsViewModel locationDetailsViewModel = LocationDetailsViewModel.GetLocationDetailsViewModel(context, id);
             return View(locationDetailsViewModel);
+        }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            LocationEditViewModel locationEditViewModel = new LocationEditViewModel();
+            return View(locationEditViewModel);
         }
     }
 }

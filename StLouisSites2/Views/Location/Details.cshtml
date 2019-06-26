@@ -5,13 +5,13 @@
 
 <h1>Details</h1>
 <p>
-    @*<a asp-controller="LocationRating" asp-action="Create" asp-route-locationID="@Model.ID">Rate/Review</a>*@
+    <a asp-controller="LocationRating" asp-action="Create" asp-route-locationID="@Model.ID">Rate/Review</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                Name
+               
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
@@ -36,16 +36,30 @@
             <td>
                 @Html.DisplayFor(modelItem => Model.Description)
             </td>
+
             @foreach (var item in Model.LocationRatingDetailsViewModels)
             {
                 <td>
                     @Html.DisplayFor(modelItem => item.Rating)
                 </td>
+            }
+            @foreach (var item in Model.LocationRatingDetailsViewModels)
+            {
                 <td>
                     @Html.DisplayFor(modelItem => item.Review)
                 </td>
             }
-            </tr>
+
+            @*@foreach (var item in Model.LocationRatingDetailsViewModels)
+        {
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Review)
+            </td>
+        }*@
+        </tr>
     @*<div>
         <a asp-action="Index">Back to List</a>
     </div>*@
