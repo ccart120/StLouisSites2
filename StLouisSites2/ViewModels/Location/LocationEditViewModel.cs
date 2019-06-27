@@ -1,6 +1,7 @@
 ﻿using StLouisSites2.Data;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,14 +11,14 @@ namespace StLouisSites2.ViewModels.Location
     {
         private ApplicationDbContext context;
         public int ID { get; set; }
-        //[Required]
+        [Required]
         public string Name { get; set; }
-        //[Required(ErrorMessage = "Description must be between 2 and 200 characters.")]
-        //[MinLength(2)]
-        //[MaxLength(200)]
+        [Required(ErrorMessage = "Description must be between 2 and 200 characters.")]
+        [MinLength(2)]
+        [MaxLength(200)]
         public string Description { get; set; }
         public string Address { get; set; }
-        //[Required]
+        [Required]
         public string County { get; set; }
 
         public LocationEditViewModel() { }
@@ -28,7 +29,7 @@ namespace StLouisSites2.ViewModels.Location
             Models.Location location = context.Locations.
                 Single(l => l.ID == id);
             //returns a populated LocationEditViewModel object
-            //still need to create an instance??
+            //still need to create an instance ??
 
             Name = location.Name;
             Description = location.Description;

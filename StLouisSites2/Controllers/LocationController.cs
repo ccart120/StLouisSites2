@@ -33,10 +33,10 @@ namespace StLouisSites2.Controllers
         [HttpPost]
         public IActionResult Create(LocationCreateViewModel locationViewModel)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //return View(locationViewModel);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return View(locationViewModel);
+            }
 
             int ID = LocationCreateViewModel.CreateLocation(context, locationViewModel);
             
