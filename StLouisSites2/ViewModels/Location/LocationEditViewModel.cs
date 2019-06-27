@@ -13,8 +13,8 @@ namespace StLouisSites2.ViewModels.Location
         public int ID { get; set; }
         [Required]
         public string Name { get; set; }
-        [Required(ErrorMessage = "Description must be between 2 and 200 characters.")]
-        [MinLength(2)]
+        [Required(ErrorMessage = "Description must be between 3 and 200 characters.")]
+        [MinLength(3)]
         [MaxLength(200)]
         public string Description { get; set; }
         public string Address { get; set; }
