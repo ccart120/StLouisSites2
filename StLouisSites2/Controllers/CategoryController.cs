@@ -31,7 +31,8 @@ namespace StLouisSites2.Controllers
         public IActionResult Create(CategoryCreateViewModel categoryCreateViewModel)
         {
             int ID = CategoryCreateViewModel.CreateCategory(context, categoryCreateViewModel);
-            return View(categoryCreateViewModel);
+            return RedirectToAction("Index", "Location");
+            //return View(categoryCreateViewModel);
         }
     }
 }

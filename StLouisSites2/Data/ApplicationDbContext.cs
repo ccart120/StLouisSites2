@@ -14,7 +14,15 @@ namespace StLouisSites2.Data
         public DbSet<LocationRating> LocationRatings { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<CategoryLocation> CategoryLocations { get; set; }
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+
+        //protected override void OnModelCreating(ModelBuilder builder)
+        //{
+        //    builder.Entity<Category>()
+        //        .HasIndex(m => m.Name)
+        //        .IsUnique();
+        //}
+
+            public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }

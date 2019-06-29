@@ -12,8 +12,8 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-          
-           
+
+
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -37,6 +37,14 @@
                     <option>St. Charles</option>
                 </select>
                 <span asp-validation-for="County" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryIDs" class="control-label"></label>
+                @foreach (var category in Model.Categories)
+                {
+                    <label>@category.Name</label>
+                    <input type="checkbox" name="CategoryIDs" value="@category.ID" />
+                }
             </div>
 
             <div class="form-group">

@@ -22,6 +22,15 @@ namespace StLouisSites2.ViewModels.Location
         [Required]
         public string County { get; set; }
 
+        [Display(Name = "Select One or More Categories")]
+        public List<int> CategoryIDs { get; set; }
+        public List<Models.Category> Categories { get; set; }
+
+        public LocationCreateViewModel(ApplicationDbContext context)
+        {
+            this.Categories = context.Categories.ToList();
+        }
+
         public static int CreateLocation(ApplicationDbContext context, LocationCreateViewModel locationViewModel)
         {
             Models.Location location = new Models.Location();
@@ -31,10 +40,25 @@ namespace StLouisSites2.ViewModels.Location
                 location.Address = locationViewModel.Address;
                 location.County = locationViewModel.County;
             }
-            context.Add(location);
+            //have to specify becaue there are multiple lists in DbContext
+            context.Locations.Add(location);
+            List<Models.CategoryLocation> categoryLocations = CreateCategoryLocationRelationships(location.ID);
+            //this refers to the list stored in the Location model
+            location.CategoryLocations = categoryLocations;
             context.SaveChanges();
 
             return location.ID;
+        }
+        //where does this locationID some from?
+        //where does catId come from?
+        private List<Models.CategoryLocation> CreateCategoryLocationRelationships(int locationID)
+        {
+            return CategoryIDs.Select(catId => new Models.CategoryLocation { LocationID = locationID, CategoryID = catID }).ToList();
+        }
+
+
+
+            
             
             
         }
@@ -43,4 +67,4 @@ namespace StLouisSites2.ViewModels.Location
     }
 
 
-}
+
