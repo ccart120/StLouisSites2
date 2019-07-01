@@ -28,7 +28,8 @@ namespace StLouisSites2.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            LocationCreateViewModel locationViewModel = new LocationCreateViewModel(context);
+            return View(locationViewModel);
         }
         [HttpPost]
         public IActionResult Create(LocationCreateViewModel locationViewModel)
@@ -38,7 +39,7 @@ namespace StLouisSites2.Controllers
                 return View(locationViewModel);
             }
 
-            int ID = LocationCreateViewModel.CreateLocation(context, locationViewModel);
+            locationViewModel.CreateLocation(context, locationViewModel);
             
             return RedirectToAction(nameof(Index));
             

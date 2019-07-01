@@ -16,7 +16,7 @@ namespace StLouisSites2.ViewModels.Location
         public string Description { get; set; }
         public List<Models.LocationRating> LocationRatings { get; set; }
         public string AverageRating { get; set; }
-
+        
 
         public static List<LocationListViewModel>GetLocationListViewModel(ApplicationDbContext context)
         {

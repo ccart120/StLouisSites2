@@ -1,4 +1,5 @@
-﻿using StLouisSites2.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using StLouisSites2.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,25 +21,30 @@ namespace StLouisSites2.ViewModels.Location
         public string Address { get; set; }
         [Required]
         public string County { get; set; }
+        public List<int>CategoryIDs { get; set; }
+        public List<Models.Category>Categories { get; set; }
 
         public LocationEditViewModel() { }
 
         public LocationEditViewModel (int id, ApplicationDbContext context)
         {
             //gets the location object from context by id
-            Models.Location location = context.Locations.
-                Single(l => l.ID == id);
+            Models.Location location = context.Locations
+                .Include(l => l.CategoryLocations)
+                .Single(l => l.ID == id);
+           
             //returns a populated LocationEditViewModel object
-            //still need to create an instance ??
+            
 
             Name = location.Name;
             Description = location.Description;
             Address = location.Address;
             County = location.County;
-            
+            CategoryIDs = location.CategoryLocations.Select(cl => cl.CategoryID).ToList();
+            Categories = context.Categories.ToList();
         }
             
-        
+        //creates an instance of populated Location object and updates database with changes
         public void Persist(int id, ApplicationDbContext context)
         {
             Models.Location location = new Models.Location()
@@ -50,8 +56,15 @@ namespace StLouisSites2.ViewModels.Location
                 County = this.County
             };
             context.Update(location);
+            List<Models.CategoryLocation> categoryLocations = CreateCategoryLocationRelationships(location.ID);
+            location.CategoryLocations = categoryLocations;
             context.SaveChanges();
 
+        }
+        private List<Models.CategoryLocation> CreateCategoryLocationRelationships (int locationID)
+        {
+            return CategoryIDs.Select(catID => new Models.CategoryLocation { LocationID = locationID, CategoryID = catID })
+                .ToList();
         }
         
     }

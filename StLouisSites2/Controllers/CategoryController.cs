@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using StLouisSites2.Data;
+using StLouisSites2.Models;
 using StLouisSites2.ViewModels.Category;
 
 namespace StLouisSites2.Controllers
@@ -18,7 +19,8 @@ namespace StLouisSites2.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            List<Category> categories = context.Categories.ToList();
+            return View(categories);
         }
 
         [HttpGet]
