@@ -15,8 +15,9 @@ namespace StLouisSites2.ViewModels.Location
         public string Name { get; set; }
         public string Description { get; set; }
         public List<LocationRatingDetailsViewModel> LocationRatingDetailsViewModels { get; set; }
-        //public List<Models.LocationRating> Reviews { get; set; }
+        public List<Models.LocationRating> Reviews { get; set; }
         public string CategoryNames { get; set; }
+        public List<Models.CategoryLocation> CategoryLocations { get; set; }
 
 
         public static LocationDetailsViewModel GetLocationDetailsViewModel(ApplicationDbContext context, int id)
@@ -25,10 +26,12 @@ namespace StLouisSites2.ViewModels.Location
             //as the ID of the Location object that we (passed in) and then assign it properties
             //we are not assigning the id, we are finding the LocationRating that has the same LocationId
             //as the ID of the Location object that we passed in
-            LocationDetailsViewModel locationDetailsViewModel = new LocationDetailsViewModel();
+
             Models.Location location = context.Locations
                 .Include(l => l.CategoryLocations)
+                    .ThenInclude(cl => cl.Category)
                 .Single(l => l.ID == id);
+                
 
 
             //include or 2 selects or 2 wheres do not work
@@ -69,30 +72,29 @@ namespace StLouisSites2.ViewModels.Location
             }
 
 
-            //COMMENTED OUT - put in constructor at the bottom
-            //locationDetailsViewModel.LocationRatingDetailsViewModels = locationRatingDetailsViewModels;
+            LocationDetailsViewModel locationDetailsViewModel = new LocationDetailsViewModel();
+            locationDetailsViewModel.LocationRatingDetailsViewModels = locationRatingDetailsViewModels;
+            locationDetailsViewModel.Name = location.Name;
+            locationDetailsViewModel.Description = location.Description;
+            locationDetailsViewModel.ID = location.ID;
+            locationDetailsViewModel.CategoryLocations = location.CategoryLocations;
+            locationDetailsViewModel.CategoryNames = locationDetailsViewModel.GetCategoryNames(location);
 
-            return new LocationDetailsViewModel()
-            {
-                Name = location.Name,
-                Description = location.Description,
-                ID = location.ID,
-                CategoryNames = locationDetailsViewModel.GetCategoryNames(location),
-                LocationRatingDetailsViewModels = locationRatingDetailsViewModels
-
-
-            };
+            
+            locationDetailsViewModel.LocationRatingDetailsViewModels = locationRatingDetailsViewModels;
+            return locationDetailsViewModel;
         }
 
-        //FIX THIS!! need to get category names and display them for location details!
+        
 
         private string GetCategoryNames(Models.Location location)
         {
-            Models.CategoryLocation categoryLocation = new Models.CategoryLocation();
-            string names = string.Join(",", location.CategoryLocations
-                .Where(cl => cl.CategoryID == cl.Category.ID)
-                .Select(cl => cl.Category.Name));
-            List<Models.Location.CategoryLocation.Category> Name = names;
+           
+            return string.Join(",", location.CategoryLocations
+                //.Where(cl => cl.CategoryID == cl.Category.ID)
+                .Select(cl => cl.Category.Name)
+                .Distinct());
+            
         }
 
 

@@ -48,11 +48,11 @@
                     <label>@category.Name</label>
                     @if (Model.CategoryIDs.Contains(category.ID))
                     {
-                        <input type="checkbox" asp-for="CategoryIDs" value="@category.ID" checked />
+                        <input type="checkbox" value="@category.ID" name="CategoryIDs" checked />
                     }
                     else
                     {
-                        <input type="checkbox" asp-for="CategoryIDs" value="@category.ID" />
+                        <input type="checkbox" value="@category.ID" name="CategoryIDs"  />
                     }
                 }
             </div>
